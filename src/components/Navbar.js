@@ -19,6 +19,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { UserContext } from "../provider/UserProvider";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import getAPI from "../util/getAPI";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,6 +46,7 @@ const NavBar = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const { userID } = useContext(UserContext);
+    const API = getAPI();
 
     const subredditRedirect = (selected) => {
         history.push({
@@ -96,10 +98,10 @@ const NavBar = () => {
         const fetchSubs = async () => {
             try {
                 if(userID !== null) {
-                    let subscriptions = await axios.get(`http://localhost:3001/subscriptions/user/${userID}`);
+                    let subscriptions = await axios.get(`${API}/subscriptions/user/${userID}`);
                     setSubscriptions(subscriptions.data.payload);
                 }
-                let subreddits = await axios.get(`http://localhost:3001/subreddits/`);
+                let subreddits = await axios.get(`${API}/subreddits/`);
                 setSubreddits(subreddits.data.payload);
             } catch (error) {
                 console.log(error)
@@ -114,7 +116,7 @@ const NavBar = () => {
         const handleSearchInput = async (value) => {
             if(value !== undefined || value !== null){
                 try {
-                    let sub = await axios.get(`http://localhost:3001/subreddits/${value}`);
+                    let sub = await axios.get(`${API}/subreddits/${value}`);
                     if(sub.data.payload.subname){
                         subredditRedirect(value);
                     }

@@ -12,6 +12,7 @@ import PostDetails from './helper/PostDetails';
 import fire from "./Fire";
 import UserProvider from './provider/UserProvider';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { getAPI } from "./util/getAPI";
 
 const theme = createMuiTheme({
   palette: {
@@ -34,6 +35,7 @@ function App() {
     const [passwordError, setPasswordError] = useState("");
     const [userNameError, setUserNameError] = useState("");
     const [userExist, setUserExist] = useState(false);
+    const API = getAPI();
 
     const clearInputs = () => {
         setEmail("");
@@ -90,7 +92,7 @@ function App() {
             }
         });
         try {
-          await axios.post(`http://localhost:3001/users`, {
+          await axios.post(`${API}/users`, {
             user_name: userName,
             email: email
           });

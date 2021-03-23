@@ -10,6 +10,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import FormControl from '@material-ui/core/FormControl';
 import { storage } from "../Fire";
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import { getAPI } from "../util/getAPI";
 
 const CreatePost = () => {
     const [subreddits, setSubreddits] = useState([]);
@@ -22,10 +23,11 @@ const CreatePost = () => {
     const { userID } = useContext(UserContext);
     const history = useHistory();
     const homeRedirect = () => history.push(`/`);
+    const API = getAPI();
 
     const fetchSubreddits = async () => {
         try {
-            let res = await axios.get(`http://localhost:3001/subreddits/`)
+            let res = await axios.get(`${API}/subreddits/`)
             setSubreddits(res.data.payload)
         } catch (error) {
             console.log(error)
@@ -66,7 +68,7 @@ const CreatePost = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:3001/posts/", {
+            await axios.post(`${API}/posts/`, {
                 user_id: userID,
                 sub_id: chosenSub,
                 title: titleContext.value,

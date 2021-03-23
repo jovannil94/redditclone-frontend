@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import moment from "moment";
+import getAPI from "../util/getAPI";
 
 const PostDetails = () => {
     const { id } = useParams();
@@ -24,14 +25,15 @@ const PostDetails = () => {
     const user = fire.auth().currentUser;
     const history = useHistory();
     const logInRedirect = () => history.push(`/login`);
+    const API = getAPI();
     
     const fetchPost = async () => {
         try {
-            let post = await axios.get(`http://localhost:3001/posts/post/${id}`);
-            let postVotes = await axios.post(`http://localhost:3001/votes/count`, {
+            let post = await axios.get(`${API}/posts/post/${id}`);
+            let postVotes = await axios.post(`${API}/votes/count`, {
                 post_id: `${id}`
             });
-            let comments = await axios.get(`http://localhost:3001/comments/${id}`);
+            let comments = await axios.get(`${API}/comments/${id}`);
             setShowPost(post.data.payload);
             setShowPostVotes(postVotes.data.payload);
             setShowAllComments(comments.data.payload);
@@ -57,7 +59,7 @@ const PostDetails = () => {
         e.preventDefault();
         if (user !== null){
             try {
-                await axios.post("http://localhost:3001/comments/", {
+                await axios.post(`${API}/comments/`, {
                     user_id: userID,
                     post_id: id,
                     context: commentContext.value
@@ -74,25 +76,25 @@ const PostDetails = () => {
     const handlePostVote = async (type) => {
         if (user !== null) {
             try {
-                let didVote = await axios.post("http://localhost:3001/votes/check",{
+                let didVote = await axios.post(`${API}/votes/check`,{
                     user_id: userID,
                     post_id: id
                 })
                 if (didVote.data.payload.length === 0){
-                        await axios.post("http://localhost:3001/votes/add",{
+                        await axios.post(`${API}/votes/add`,{
                         user_id: userID,
                         post_id: id,
                         vote_type: type
                     });
                 } else if (didVote.data.payload[0].vote_type === type) {
-                    await axios.delete("http://localhost:3001/votes/delete", {
+                    await axios.delete(`${API}/votes/delete`, {
                         data: {
                             user_id: userID,
                             post_id: id 
                         }
                     });
                 } else if (didVote.data.payload[0].vote_type !== type) {
-                    await axios.patch("http://localhost:3001/votes/changevote", {
+                    await axios.patch(`${API}/votes/changevote`, {
                         user_id: userID,
                         post_id: id,
                         vote_type: type

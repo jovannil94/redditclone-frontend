@@ -6,17 +6,19 @@ import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import "../css/CreateSubreddit.css";
+import getAPI from "../util/getAPI";
 
 const CreateSubreddit = () => {
     const nameContext = useInputs("");
     const { userID } = useContext(UserContext);
     const history = useHistory();
     const homeRedirect = () => history.push(`/`);
+    const API = getAPI();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:3001/subreddits/", {
+            await axios.post(`${API}/subreddits/`, {
                 user_id: userID,
                 subname: nameContext.value
             })

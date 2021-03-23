@@ -4,7 +4,8 @@ import axios from "axios";
 import DisplayPost from "../helper/DisplayPosts";
 import { UserContext } from "../provider/UserProvider";
 import Button from '@material-ui/core/Button';
-import "../css/Subreddit.css"
+import "../css/Subreddit.css";
+import getAPI from "../util/getAPI";
 
 const Subreddit = () => {
     const [subredditDetails, setSubredditDetails] = useState([]);
@@ -13,11 +14,12 @@ const Subreddit = () => {
     const [subscribed, setSubscribed] = useState(false);
     const [subID, setSubID] = useState();
     const [subCount, setSubCount] = useState("");
+    const API = getAPI();
 
     const handleSubscribe = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`http://localhost:3001/subscriptions/add`, {
+            await axios.post(`${API}/subscriptions/add`, {
                 user_id: userID,
                 sub_id: subID
             });
@@ -30,7 +32,7 @@ const Subreddit = () => {
     const handleUnsubscribe = async (e) => {
         e.preventDefault();
         try {
-            await axios.delete(`http://localhost:3001/subscriptions/delete`, {
+            await axios.delete(`${API}/subscriptions/delete`, {
                 data: {
                     user_id: userID,
                     sub_id: subID
@@ -45,7 +47,7 @@ const Subreddit = () => {
     useEffect(() => {
         const isUserSubscribed = async (id) => {
             try {
-                let res = await axios.get(`http://localhost:3001/subscriptions/usersubbed/${userID}/${id}`);
+                let res = await axios.get(`${API}/subscriptions/usersubbed/${userID}/${id}`);
                 if(res.data.payload) {
                     setSubscribed(true);
                 }
@@ -57,8 +59,8 @@ const Subreddit = () => {
 
         const fetchDetails = async () => {
             try {
-                let sub = await axios.get(`http://localhost:3001/subreddits/${subname}`);
-                let count = await axios.get(`http://localhost:3001/subscriptions/subreddit/${sub.data.payload.id}`);
+                let sub = await axios.get(`${API}/subreddits/${subname}`);
+                let count = await axios.get(`${API}/subscriptions/subreddit/${sub.data.payload.id}`);
                 setSubredditDetails(sub.data.payload);
                 isUserSubscribed(sub.data.payload.id);
                 setSubID(sub.data.payload.id);
