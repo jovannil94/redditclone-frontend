@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import fire from "./../Fire";
-import getAPI from "../util/getAPI"
+import { getAPI } from "../util/getAPI"
 
 export const UserContext = createContext();
 

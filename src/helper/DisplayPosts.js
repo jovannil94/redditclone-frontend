@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PostIndex from "./PostIndex";
-import getAPI from "../util/getAPI";
+import { getAPI } from "../util/getAPI";
 
 const DisplayPost = (props) => {
     const [allPost, setAllPost] = useState([]);

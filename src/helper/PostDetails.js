@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import moment from "moment";
-import getAPI from "../util/getAPI";
+import { getAPI } from "../util/getAPI";
 
 const PostDetails = () => {
     const { id } = useParams();

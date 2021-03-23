@@ -5,7 +5,7 @@ import DisplayPost from "../helper/DisplayPosts";
 import { UserContext } from "../provider/UserProvider";
 import Button from '@material-ui/core/Button';
 import "../css/Subreddit.css";
-import getAPI from "../util/getAPI";
+import { getAPI } from "../util/getAPI";
 
 const Subreddit = () => {
     const [subredditDetails, setSubredditDetails] = useState([]);

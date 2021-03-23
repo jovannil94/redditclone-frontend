@@ -19,7 +19,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { UserContext } from "../provider/UserProvider";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import getAPI from "../util/getAPI";
+import { getAPI } from "../util/getAPI";
 
 const useStyles = makeStyles((theme) => ({
     root: {
