@@ -55,8 +55,8 @@ const NavBar = () => {
     }
     
     const handleLogoClick = () => {
-        setChosen("Home")
-        homeRedirect()
+        setChosen("Home");
+        homeRedirect();
     }
     
     const handleChange = async (e) => {
@@ -114,7 +114,8 @@ const NavBar = () => {
             }
         }
         const handleSearchInput = async (value) => {
-            if(value !== undefined || value !== null){
+            debugger
+            if(value.length > 0){
                 try {
                     let sub = await axios.get(`${API}/subreddits/${value}`);
                     if(sub.data.payload.subname){
@@ -123,6 +124,8 @@ const NavBar = () => {
                 } catch (error) {
                     console.log(error)
                 }
+            } else {
+                homeRedirect();
             }
         }
 

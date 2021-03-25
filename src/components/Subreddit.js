@@ -59,12 +59,16 @@ const Subreddit = () => {
 
         const fetchDetails = async () => {
             try {
-                let sub = await axios.get(`${API}/subreddits/${subname}`);
-                let count = await axios.get(`${API}/subscriptions/subreddit/${sub.data.payload.id}`);
-                setSubredditDetails(sub.data.payload);
-                isUserSubscribed(sub.data.payload.id);
-                setSubID(sub.data.payload.id);
-                setSubCount(count.data.payload.count);
+                if(subname !== undefined) {
+                    let sub = await axios.get(`${API}/subreddits/${subname}`);
+                    let count = await axios.get(`${API}/subscriptions/subreddit/${sub.data.payload.id}`);
+                    setSubredditDetails(sub.data.payload);
+                    isUserSubscribed(sub.data.payload.id);
+                    setSubID(sub.data.payload.id);
+                    setSubCount(count.data.payload.count);
+                } else {
+                    
+                }
             } catch (error) {
                 console.log(error)
             }
