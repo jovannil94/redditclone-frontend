@@ -66,8 +66,6 @@ const Subreddit = () => {
                     isUserSubscribed(sub.data.payload.id);
                     setSubID(sub.data.payload.id);
                     setSubCount(count.data.payload.count);
-                } else {
-                    
                 }
             } catch (error) {
                 console.log(error)

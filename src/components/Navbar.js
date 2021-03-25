@@ -114,7 +114,6 @@ const NavBar = () => {
             }
         }
         const handleSearchInput = async (value) => {
-            debugger
             if(value.length > 0){
                 try {
                     let sub = await axios.get(`${API}/subreddits/${value}`);
